@@ -27,7 +27,6 @@ class Array:
         self._capacity *= 2
         print(f'Expand capacity to {self._capacity}')
 
-        # create a new array of _capacity
         array_data_type = ctypes.py_object * self._capacity
         new_memory = array_data_type()
 
@@ -60,10 +59,14 @@ class Array:
         return result
 
     def insert(self, idx, value):
+        '''
+        ● In the lecture, we implement insert function to allow only integer indices in the
+            range [0, size-1]
+        '''
         if self.size == self._capacity:
             self.expand_capacity()
-        for i in range(self.size-1,idx-1,-1):
-            self.memory[i+1]=self.memory[i]
+        for i in range(self.size-self._capacity-1, idx-self._capacity-1, -1):
+            self.memory[i+1] = self.memory[i]
         self.memory[idx] = value
         self.size += 1
 
@@ -72,13 +75,21 @@ array = Array(0)
 array.append(56)
 array.append('hello')
 print(array)
-#56, hello,
+#56 ,hello,---
 array.insert(0, 'A0')
-print(array)
 # A0, 56, hello,
 array.insert(2, 'A2')
 print(array)
 # A0, 56, A2, hello,
 array.insert(1, -9)
 print(array)
-# A0, -9, 56, A2, hello,
+# A0, -9, 56, A2, hello, none none none ...
+
+'''
+● In the lecture, we implement insert function to allow only integer indices in the
+range [0, size-1]
+● However, list in Python allows negative indexing
+● Change the code to allow negative integer indexing
+    ○ In practice, the user may also make mistakes by passing a float or a wrong data type
+    ○ Handling these mistakes is out of our scope
+● Change your code to work according to the list as follows:'''
