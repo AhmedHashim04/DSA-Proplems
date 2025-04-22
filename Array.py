@@ -97,6 +97,7 @@ class Array:
             ● No new array allocation/capacity expansion to occur
         """
         value = self.memory[self.size-1]
+
         for p in range(self.size - 1, 0 - 1, - 1):
             self.memory[p + 1] = self.memory[p]
         self.memory[0] = value
@@ -107,7 +108,23 @@ class Array:
             self.memory[p] = self.memory[p+1]
         self.memory[self.size-1] = value
 
-def test_left_rotate():
+
+    def right_rotate_steps(self,k):
+        """
+        The function shifts every element k step towards the right.
+            ● Assume the array content is: 0 1 2 3 4
+            ● After a right rotation it will be: 4 0 1 2 3
+                ○  the '4' has been rotated to the head of the array!
+                and repeated n times
+        """
+        k = k%len(self)
+        for time in range(k):
+            value = self.memory[self.size-1]
+            for p in range(self.size - 1, 0 - 1, - 1):
+                self.memory[p + 1] = self.memory[p]
+            self.memory[0] = value
+
+def test_right_rotate_steps():
     array = Array(0)
     array.append(0)
     array.append(1)
@@ -115,13 +132,16 @@ def test_left_rotate():
     array.append(3)
     array.append(4)
     print(array)
+    # 0, 1, 2, 3, 4,
 
-    array.left_rotate()
-    print(array)
-    # 1, 2, 3, 4, 0,
-
-    array.left_rotate()
+    array.right_rotate_steps(3)
     print(array)
     # 2, 3, 4, 0, 1,
+    array.right_rotate_steps(7)
+    print(array)
+    # 0, 1, 2, 3, 4,
 
-test_left_rotate()
+    array.right_rotate_steps(123456789)
+    print(array)
+    # 1, 2, 3, 4, 0,
+test_right_rotate_steps()
