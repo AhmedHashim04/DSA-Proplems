@@ -86,36 +86,41 @@ class Array:
             self.memory[self.size-self._capacity+idx] = value
 
         self.size += 1
-# -3 idx
-# size = 4
-# total -16
 
-def test_insert():
+    def right_rotate(self):
+        """
+        The function shifts every element 1 step towards the right.
+            ● Assume the array content is: 0 1 2 3 4
+            ● After a right rotation it will be: 4 0 1 2 3
+                ○  the '4' has been rotated to the head of the array!
+
+            ● No new array allocation/capacity expansion to occur
+        """
+        value = self.memory[self.size-1]
+        for p in range(self.size - 1, 0 - 1, - 1):
+            self.memory[p + 1] = self.memory[p]
+        self.memory[0] = value
+
+
+def test_right_rotate():
     array = Array(0)
+
+    array.right_rotate()
+    print(array)
+
+    array = Array(0)
+    array.append(0)
     array.append(1)
     array.append(2)
     array.append(3)
     array.append(4)
-    # 1, 2, 3, 4
-    array.insert(-1, -10)
-    print(array)  # 1, 2, 3, -10, 4,
 
-    array.insert(-2, -20)
-    print(array)  # 1, 2, 3, -20, -10, 4,
+    array.right_rotate()
+    print(array)
+    # 4, 0, 1, 2, 3,
 
-    array.insert(-3, -30)
-    print(array)  # 1, 2, 3, -30, -20, -10, 4,
+    array.right_rotate()
+    print(array)
+    # # 3, 4, 0, 1, 2,
 
-    array.insert(-4, -40)
-    print(array)  # 1, 2, 3, -40, -30, -20, -10, 4,
-
-    array.insert(-5, -50)
-    print(array)  # 1, 2, 3, -50, -40, -30, -20, -10, 4,
-
-    array.insert(8, 80)
-    print(array)  # 1, 2, 3, -50, -40, -30, -20, -10, 80, 4,
-
-    array.insert(20, 90)
-    print(array)  # 1, 2, 3, -50, -40, -30, -20, -10, 80, 4, 90,
-test_insert()
-
+test_right_rotate()
