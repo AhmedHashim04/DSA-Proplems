@@ -59,21 +59,14 @@ class Array:
             result += str(self.memory[i]) + ', '
         return result
 
-    def insert(self,idx,value):
-
+    def insert(self, idx, value):
         if self.size == self._capacity:
-            # we can't add any more
             self.expand_capacity()
-
-        # Shift all the data to right first CORRECTLY
-        # Shift range (idx, size-1) from the back
-        for p in range(self.size - 1, idx - 1, - 1):
-            self.memory[p + 1] = self.memory[p]
+        for i in range(self.size-1,idx-1,-1):
+            self.memory[i+1]=self.memory[i]
         self.memory[idx] = value
         self.size += 1
 
-        # Common mistake to iterate from begin to end
-        # the whole array right array will be arr[idx]
 
 array = Array(0)
 array.append(56)
