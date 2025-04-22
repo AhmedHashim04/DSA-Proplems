@@ -101,26 +101,27 @@ class Array:
             self.memory[p + 1] = self.memory[p]
         self.memory[0] = value
 
+    def left_rotate(self):
+        value = self.memory[0]
+        for p in range(0, self.size):
+            self.memory[p] = self.memory[p+1]
+        self.memory[self.size-1] = value
 
-def test_right_rotate():
-    array = Array(0)
-
-    array.right_rotate()
-    print(array)
-
+def test_left_rotate():
     array = Array(0)
     array.append(0)
     array.append(1)
     array.append(2)
     array.append(3)
     array.append(4)
-
-    array.right_rotate()
     print(array)
-    # 4, 0, 1, 2, 3,
 
-    array.right_rotate()
+    array.left_rotate()
     print(array)
-    # # 3, 4, 0, 1, 2,
+    # 1, 2, 3, 4, 0,
 
-test_right_rotate()
+    array.left_rotate()
+    print(array)
+    # 2, 3, 4, 0, 1,
+
+test_left_rotate()
