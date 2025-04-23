@@ -12,7 +12,7 @@ Array Properties in C Language :
 """ 
 
 class Array:
-    def __init__(self, size):
+    def __init__(self, size,initial_values=None):
         self.size = size                    # user size
         self._capacity = max(16, 2*size)    # actual memory size
 
@@ -20,7 +20,7 @@ class Array:
         self.memory = array_data_type()
 
         for i in range(self._capacity):
-            self.memory[i] = None
+            self.memory[i] = initial_values=None
 
     def expand_capacity(self):
         # Double the actual array size
@@ -60,6 +60,7 @@ class Array:
         for i in range(self.size):
             result += str(self.memory[i]) + ', '
         return result
+    
     def insert(self, idx, value):
         """
         ● In the lecture, we implement insert function to allow only integer indices in the
@@ -177,39 +178,45 @@ class Array:
         if self.memory[0] == value:return 0
         return -1
 
+class Array2D:
+    def __init__(self, rows, columns,initial_values=None):
+        """
+        Initializes a 2D array with the specified number of rows and columns.
 
+        Parameters:
+        rows (int): The number of rows in the 2D array.
+        column (int): The number of columns in each row of the 2D array.
+        initial_value (optional): The initial value to fill in each position of the 2D array.
+        """
 
+        self.rows = rows
+        self.columns = columns
+        self.grid = Array(rows)
+        for i in range(rows):
+            self.grid[i] = Array(columns,initial_values) 
 
+    def __getitem__(self, index):
+        r, c = index[0], index[1]
+        return self.grid[r][c]
 
+    def __setitem__(self, index, value):
+        r, c = index[0], index[1]
+        self.grid[r][c] = value
 
+    def __repr__(self):
+        result = ''
+        for i in range(self.rows):
+            result += str(self.grid[i]) + '\n'
+        return result
 
+if __name__ == '__main__':
 
-
-
-
-def test_index_transposition():
-
-    array = Array(0)
-    array.append(10)
-    array.append(20)
-    array.append(30)
-    array.append(40)
-    array.append(50)
-    print(array)
-    # 10, 20, 30, 40, 50,
-
-    print(array.index_transposition(10))
-    print(array)    # 0
-    # 10, 20, 30, 40, 50,
-
-    print(array.index_transposition(50))
-    print(array)    # 3
-    # 10, 20, 30, 50, 40,
-
-    print(array.index_transposition(50))
-    print(array)    # 2
-    # 10, 20, 50, 30, 40,
-
-    print(array.index_transposition(60))    # -1
-
-test_index_transposition()
+    # create 2x4 grid initialized to 0
+    arr2d = Array2D(2, 4, 0)
+    arr2d[(0, 2)] = 3
+    arr2d[(1, 1)] = 5
+    arr2d[(1, 3)] = 7
+    print(arr2d)
+    # 0, 0, 3, 0,
+    # 0, 5, 0, 7,
+    print(arr2d[(1, 3)])    # 7
