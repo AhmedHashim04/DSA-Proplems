@@ -5,7 +5,7 @@ Array Properties in C Language :
     -Fixed Size 
     -All elements is the same type
     -stored in continius inteveral places in memory 
-    -Fixed elements dot swab dont change places
+    -Fixed elements dot swap dont change places
     -to access in element you spent 1 step
     -no append no len no check Bounds
     -if you want to append you need to create new array and copy old elements
@@ -123,25 +123,85 @@ class Array:
             for p in range(self.size - 1, 0 - 1, - 1):
                 self.memory[p + 1] = self.memory[p]
             self.memory[0] = value
+    def pop(self,pos=None):
+        """
+        Implement method pop( idx) to act similar to Python list
+            ○ Index must be in range [-size to size-1], otherwise fail with error msg
+        ■ pop index out of range
+        ■ You can use assertion or throw an exception
 
-def test_right_rotate_steps():
+        ● It returns the deleted value
+        ● Remove this element from the array
+        ● No new memory creation
+        ● Code is very efficient if the removed element is the last
+        one
+        """
+        if pos == None:
+            temp = self.memory[self.size-1]
+            self.memory = self.memory[:self.size-1]
+
+        else:
+                    
+            if pos >= 0 :
+                if self.size-1 < pos:
+                    print ("pop index out of range")
+                    return
+                for i in range(self.size):
+                    if i == pos:
+                        temp = self.memory[i]
+                        self.memory[pos] = None
+                        break
+                for o in range(pos,self.size):
+                    self.memory[o]=self.memory[o+1]
+            if pos < 0 :
+                if self.size+pos < 0:
+                    print ("pop index out of range")
+                    return
+                pos = pos + self.size
+                for i in range(self.size):
+                    if i == pos:
+                        temp = self.memory[i]
+                        self.memory[pos] = None
+                        break
+                for o in range(pos,self.size):
+                    self.memory[o]=self.memory[o+1]
+
+        self.size -= 1
+        return temp
+        
+
+
+
+
+def test_pop():
     array = Array(0)
-    array.append(0)
-    array.append(1)
-    array.append(2)
-    array.append(3)
-    array.append(4)
+    array.append(10)
+    array.append(20)
+    array.append(30)
+    array.append(40)
     print(array)
-    # 0, 1, 2, 3, 4,
+    # 10, 20, 30, 40,
 
-    array.right_rotate_steps(3)
+    print(array.pop(0))  # 10
     print(array)
-    # 2, 3, 4, 0, 1,
-    array.right_rotate_steps(7)
-    print(array)
-    # 0, 1, 2, 3, 4,
+    # 20, 30, 40,
 
-    array.right_rotate_steps(123456789)
+    print(array.pop(2))  # 40
     print(array)
-    # 1, 2, 3, 4, 0,
-test_right_rotate_steps()
+    # 20, 30,
+    array.append(60)
+    array.append(70)
+    array.append(80)
+    print(array)
+    print(array.pop(-1))  # 80
+    print(array)
+    # # 20, 30, 60, 70,
+
+    print(array.pop(-4))  # 20
+    # 30, 60, 70,
+    print(array)
+    # # pop index out of range
+    array.pop(-4)
+    array.pop(3)
+
+test_pop()
