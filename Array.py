@@ -169,39 +169,47 @@ class Array:
         self.size -= 1
         return temp
         
+    def index_transposition(self,value):
+        for p in range(self.size):
+            if self.memory[p+1] == value:
+                self.memory[p],self.memory[p+1] = self.memory[p+1],self.memory[p]
+                return p
+        if self.memory[0] == value:return 0
+        return -1
 
 
 
 
-def test_pop():
+
+
+
+
+
+
+
+def test_index_transposition():
+
     array = Array(0)
     array.append(10)
     array.append(20)
     array.append(30)
     array.append(40)
+    array.append(50)
     print(array)
-    # 10, 20, 30, 40,
+    # 10, 20, 30, 40, 50,
 
-    print(array.pop(0))  # 10
-    print(array)
-    # 20, 30, 40,
+    print(array.index_transposition(10))
+    print(array)    # 0
+    # 10, 20, 30, 40, 50,
 
-    print(array.pop(2))  # 40
-    print(array)
-    # 20, 30,
-    array.append(60)
-    array.append(70)
-    array.append(80)
-    print(array)
-    print(array.pop(-1))  # 80
-    print(array)
-    # # 20, 30, 60, 70,
+    print(array.index_transposition(50))
+    print(array)    # 3
+    # 10, 20, 30, 50, 40,
 
-    print(array.pop(-4))  # 20
-    # 30, 60, 70,
-    print(array)
-    # # pop index out of range
-    array.pop(-4)
-    array.pop(3)
+    print(array.index_transposition(50))
+    print(array)    # 2
+    # 10, 20, 50, 30, 40,
 
-test_pop()
+    print(array.index_transposition(60))    # -1
+
+test_index_transposition()
