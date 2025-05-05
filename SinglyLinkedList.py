@@ -69,26 +69,22 @@ class SinglyLinkedList:
 
         _, result = recursive_helper(cur, pos)
         return result
-def identicalLinkedLists(L1,L2):
+def identicalLinkedLists(L1, L2):
     """
-        checks if 2 lists have identical data:
-            ○ Each list must be the same length
-            ○ The value of a node in one list must
-        match the value of its corresponding node in the other list
+    Checks if 2 lists have identical data:
+        ○ Each list must be the same length
+        ○ The value of a node in one list must
+          match the value of its corresponding node in the other list
     """
+    cur1 = L1.head
+    cur2 = L2.head
+    while cur1 is not None and cur2 is not None:
+        if cur1.data != cur2.data:
+            return False
+        cur1 = cur1.next
+        cur2 = cur2.next
 
-    if len(L1) == len(L2) :
-        cur1 = L1.head
-        cur2 = L2.head
-        for i in range(len(L1)):
-            if cur1.data == cur2.data :
-                if cur1.next:
-                    cur1,cur2 = cur1.next,cur2.next 
-            else:
-                return False
-        return True
-    else:
-        return False
+    return cur1 is None and cur2 is None
 
 
             
