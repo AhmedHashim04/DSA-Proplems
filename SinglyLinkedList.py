@@ -57,7 +57,7 @@ class SinglyLinkedList:
                 idx += 1
 
             return f"element: {current.data} in pos: {pos}"
-    def get_nth_from_back_anotherway(self, cur, pos):
+    def get_nth_from_back_recursive(self, cur, pos):
         def recursive_helper(node, pos):
             if node is None:
                 return 0, None
