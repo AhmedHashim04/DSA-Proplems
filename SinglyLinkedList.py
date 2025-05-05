@@ -57,11 +57,26 @@ class SinglyLinkedList:
                 idx += 1
 
             return f"element: {current.data} in pos: {pos}"
+    def get_nth_from_back_anotherway(self, cur, pos):
+        def recursive_helper(node, pos):
+            if node is None:
+                return 0, None
+            idx, result = recursive_helper(node.next, pos)
+            idx += 1
+            if idx == pos:
+                return idx, node.data
+            return idx, result
+
+        _, result = recursive_helper(cur, pos)
+        return result
+
+
 
             
 
 LL = SinglyLinkedList([1,2,3,4,5])
-LL.insertFront(0)
-# LL.deleteFront()
-print(LL)
-print(LL.get_nth_from_back(6))
+# LL.insertFront(0)
+# # LL.deleteFront()
+# print(LL)
+# print(LL.get_nth_from_back(6))
+print(LL.get_nth_from_back_anotherway(LL.head,2))
