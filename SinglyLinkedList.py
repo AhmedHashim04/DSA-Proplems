@@ -69,14 +69,31 @@ class SinglyLinkedList:
 
         _, result = recursive_helper(cur, pos)
         return result
+def identicalLinkedLists(L1,L2):
+    """
+        checks if 2 lists have identical data:
+            ○ Each list must be the same length
+            ○ The value of a node in one list must
+        match the value of its corresponding node in the other list
+    """
 
+    if len(L1) == len(L2) :
+        cur1 = L1.head
+        cur2 = L2.head
+        for i in range(len(L1)):
+            if cur1.data == cur2.data :
+                if cur1.next:
+                    cur1,cur2 = cur1.next,cur2.next 
+            else:
+                return False
+        return True
+    else:
+        return False
 
 
             
 
-LL = SinglyLinkedList([1,2,3,4,5])
-# LL.insertFront(0)
-# # LL.deleteFront()
-# print(LL)
-# print(LL.get_nth_from_back(6))
-print(LL.get_nth_from_back_recursive(LL.head,2))
+LL1 = SinglyLinkedList([1,2,3,4,5])
+LL2 = SinglyLinkedList([1,2,3,5])
+
+print(identicalLinkedLists(L1=LL1,L2=LL2))
