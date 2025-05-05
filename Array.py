@@ -82,6 +82,7 @@ class Array:
             self.memory[idx] = value
 
         else :
+            # idx = idx + self.size
             for p in range(self.size-self._capacity-1, (idx+self.size-self._capacity-1), - 1):
                 self.memory[p + 1] = self.memory[p]
             self.memory[self.size-self._capacity+idx] = value
@@ -110,6 +111,7 @@ class Array:
         self.memory[self.size-1] = value
 
 
+
     def right_rotate_steps(self,k):
         """
         The function shifts every element k step towards the right.
@@ -118,7 +120,7 @@ class Array:
                 ○  the '4' has been rotated to the head of the array!
                 and repeated n times
         """
-        k = k%len(self)
+        k = k % len(self)
         for time in range(k):
             value = self.memory[self.size-1]
             for p in range(self.size - 1, 0 - 1, - 1):
@@ -209,14 +211,38 @@ class Array2D:
             result += str(self.grid[i]) + '\n'
         return result
 
-if __name__ == '__main__':
 
-    # create 2x4 grid initialized to 0
-    arr2d = Array2D(2, 4, 0)
-    arr2d[(0, 2)] = 3
-    arr2d[(1, 1)] = 5
-    arr2d[(1, 3)] = 7
-    print(arr2d)
-    # 0, 0, 3, 0,
-    # 0, 5, 0, 7,
-    print(arr2d[(1, 3)])    # 7
+
+
+def test_insert():
+    array = Array(0)
+    array.append(1)
+    array.append(2)
+    array.append(3)
+    array.append(4)
+    # 1, 2, 3, 4
+    array.insert(-1, -10)
+    print(array)  # 1, 2, 3, -10, 4,
+
+    array.insert(-2, -20)
+    print(array)  # 1, 2, 3, -20, -10, 4,
+
+    array.insert(-3, -30)
+    print(array)  # 1, 2, 3, -30, -20, -10, 4,
+
+    array.insert(-4, -40)
+    print(array)  # 1, 2, 3, -40, -30, -20, -10, 4,
+
+    array.insert(-5, -50)
+    print(array)  # 1, 2, 3, -50, -40, -30, -20, -10, 4,
+
+    array.insert(8, 80)
+    print(array)  # 1, 2, 3, -50, -40, -30, -20, -10, 80, 4,
+
+    array.insert(20, 90)
+    print(array)  # 1, 2, 3, -50, -40, -30, -20, -10, 80, 4, 90,
+
+    array.insert(-20, 90)
+    print(array)  # 1, 2, 3, -50, -40, -30, -20, -10, 80, 4, 90,
+
+test_insert()
