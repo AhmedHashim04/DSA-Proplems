@@ -34,7 +34,34 @@ class SinglyLinkedList:
     def deleteFront(self):
         self.head = self.head.next
 
+    def __len__(self):
+        result = 0
+        current = self.head
+        while current is not None:
+            result += 1
+            current = current.next
+        return result
+    
+    def get_nth_from_back(self,pos):
+        """
+        Retrieves the element at the given position from the back of the list.
+
+        """
+        if self.head:
+            if pos > len(self) or pos <= 0 :
+                return None
+            idx = 0
+            current = self.head
+            while idx != len(self)-pos :
+                current = current.next
+                idx += 1
+
+            return f"element: {current.data} in pos: {pos}"
+
+            
+
 LL = SinglyLinkedList([1,2,3,4,5])
 LL.insertFront(0)
-LL.deleteFront()
+# LL.deleteFront()
 print(LL)
+print(LL.get_nth_from_back(6))
