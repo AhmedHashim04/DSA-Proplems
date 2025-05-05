@@ -7,7 +7,7 @@ class SinglyLinkedList:
     def __init__(self, list: list):
         self.head = None
         if list:
-            self.head = node(list[0])
+            self.head = node(list[0])           # Time : O(N), Memory : O(N)
             current = self.head
             for value in list[1:]:
                 current.next = node(value)
@@ -27,7 +27,14 @@ class SinglyLinkedList:
             current = current.next
         return result + "None"
 
-
+    def insertFront(self,value):
+        newNode = node(value)
+        newNode.next = self.head
+        self.head = newNode
+    def deleteFront(self):
+        self.head = self.head.next
 
 LL = SinglyLinkedList([1,2,3,4,5])
+LL.insertFront(0)
+LL.deleteFront()
 print(LL)
