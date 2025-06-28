@@ -110,11 +110,37 @@ class SinglyLinkedList:
         
         current = self.head
         while current and current.next:
-            temp = current.data
-            current.data = current.next.data
-            current.next.data = temp
-            current = current.next
+            current.data, current.next.data = current.next.data, current.data
+            current = current.next.next
         return (self)
+# 1 -> 3 4 5
+    def reverse(self):
+        prev = None
+        while self.head:
+            temp = self.head.next
+            self.head.next = prev
+            prev = self.head
+            self.head = temp
+        self.head = prev
+        return (self)
+
+    def delete_even_pos(self):
+        current = self.head
+        while current.next:
+            current.next = current.next.next
+            current=current.next
+
+    def insert_sorted(self, item: int) -> None:
+        newNode = node(item)
+        if self.head is None or self.head.data >= item:
+            newNode.next = self.head
+            self.head = newNode
+            return
+        current = self.head
+        while current.next is not None and current.next.data < item:
+            current = current.next
+        newNode.next = current.next
+        current.next = newNode
 
     def debug_verify_data_integrity(self):
         if len(self) == 0:
@@ -167,4 +193,5 @@ LL2 = SinglyLinkedList([1,2,3])
 
 # print(identicalLinkedLists(L1=LL1,L2=LL2))
 # print(LL1.improved_search(5))
-print(LL1.swap_pairs())
+LL1.insert_sorted(4)
+print(LL1)
