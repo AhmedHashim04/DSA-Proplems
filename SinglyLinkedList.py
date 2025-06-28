@@ -43,16 +43,13 @@ class SinglyLinkedList:
     def deleteFront(self):
         self.head = self.head.next
 
-    def get_item(self,item):
-        """
-        empty , len :1 , len:2
-        """
-        temp,pos = self.head , 1
-        while temp: # O(n)
-            if temp.data == item : return pos
-            temp = temp.next
-            pos += 1
-        return "there isn,t item in SLL"
+    def get_item(self, item):
+        current = self.head
+        for pos in range(1, len(self) + 1):  #O(N)
+            if current.data == item:
+                return pos
+            current = current.next
+        return None
 
     def get_nth(self, pos): #O(n)
         if pos <= 0:
