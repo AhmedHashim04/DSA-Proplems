@@ -88,6 +88,22 @@ class SinglyLinkedList:
 
         _, result = recursive_helper(cur, pos)
         return result
+# 1 2 3 4 5 -- (4) -- 1 2 4 3 5
+    def improved_search(self,item):
+        current, prev = self.head, None
+        if self.head is None: return None
+        if self.head.data == item: return 1
+        if not self.head.next: return None
+
+        for pos in range(1, len(self) + 1):  #O(N)
+            if current.data == item:
+                if not prev :
+                    return pos
+                current, prev = prev, current
+                return pos
+            prev,current = current, current.next
+
+        return None
 
 def identicalLinkedLists(L1, L2):
     """
@@ -114,4 +130,4 @@ LL1 = SinglyLinkedList([1,2,3,4,5])
 LL2 = SinglyLinkedList([1,2,3])
 
 # print(identicalLinkedLists(L1=LL1,L2=LL2))
-print(LL1.get_item(8))
+print(LL1.improved_search(5))
