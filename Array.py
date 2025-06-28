@@ -20,7 +20,7 @@ class Array:
         self.memory = array_data_type()
 
         for i in range(self._capacity):
-            self.memory[i] = initial_values=None
+            self.memory[i] = initial_values = None
 
     def expand_capacity(self):
         # Double the actual array size

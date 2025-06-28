@@ -88,7 +88,7 @@ class SinglyLinkedList:
 
         _, result = recursive_helper(cur, pos)
         return result
-# 1 2 3 4 5 -- (4) -- 1 2 4 3 5
+
     def improved_search(self,item):
         current, prev = self.head, None
         if self.head is None: return None
@@ -104,6 +104,44 @@ class SinglyLinkedList:
             prev,current = current, current.next
 
         return None
+
+    def swap_pairs(self):
+        if not self.head or not self.head.next: return
+        
+        current = self.head
+        while current and current.next:
+            temp = current.data
+            current.data = current.next.data
+            current.next.data = temp
+            current = current.next
+        return (self)
+
+    def debug_verify_data_integrity(self):
+        if len(self) == 0:
+            assert self.head is None
+            assert self.tail is None
+            return
+
+        assert self.head is not None
+        assert self.tail is not None
+        assert self.tail.next is None
+
+        if len(self) == 1:
+            assert self.head == self.tail
+        elif len(self) == 2:
+            assert self.head.next == self.tail
+        else:
+            actual_lst_len = 0
+            temp_head = self.head
+
+            while temp_head is not None:
+                temp_head = temp_head.next
+                actual_lst_len += 1
+                assert actual_lst_len < 1000  # Consider infinite cycle
+
+            assert len(self) == actual_lst_len
+            assert len(self) == len(self.debug_data)
+
 
 def identicalLinkedLists(L1, L2):
     """
@@ -124,10 +162,9 @@ def identicalLinkedLists(L1, L2):
     return cur1 is None and cur2 is None
 
 
-            
-
 LL1 = SinglyLinkedList([1,2,3,4,5])
 LL2 = SinglyLinkedList([1,2,3])
 
 # print(identicalLinkedLists(L1=LL1,L2=LL2))
-print(LL1.improved_search(5))
+# print(LL1.improved_search(5))
+print(LL1.swap_pairs())
