@@ -13,17 +13,6 @@ class SinglyLinkedList:
                 current.next = node(value)
                 current = current.next
 
-    def get_nth(self, pos): #O(n)
-
-        if pos <= 0:
-            return "nothing is orderd"
-        
-        i,n = 1,self.head
-        while n:
-            if i == pos : return n.data
-            n,i = n.next,i+1
-        return "the lenth isn,t big as ur pos as"
-
     def __iter__(self):
         current = self.head
         while current is not None:
@@ -38,13 +27,6 @@ class SinglyLinkedList:
             current = current.next
         return result + "None"
 
-    def insertFront(self,value):
-        newNode = node(value)
-        newNode.next = self.head
-        self.head = newNode
-    def deleteFront(self):
-        self.head = self.head.next
-
     def __len__(self):
         result = 0
         current = self.head
@@ -53,10 +35,38 @@ class SinglyLinkedList:
             current = current.next
         return result
     
+    def insertFront(self,value):
+        newNode = node(value)
+        newNode.next = self.head
+        self.head = newNode
+
+    def deleteFront(self):
+        self.head = self.head.next
+
+    def get_item(self,item):
+        """
+        empty , len :1 , len:2
+        """
+        temp,pos = self.head , 1
+        while temp: # O(n)
+            if temp.data == item : return pos
+            temp = temp.next
+            pos += 1
+        return "there isn,t item in SLL"
+
+    def get_nth(self, pos): #O(n)
+        if pos <= 0:
+            return "nothing is orderd"
+        
+        i,n = 1,self.head
+        while n:
+            if i == pos : return n.data
+            n,i = n.next,i+1
+        return "the lenth isn,t big as ur pos as"
+
     def get_nth_from_back(self,pos):
         """
         Retrieves the element at the given position from the back of the list.
-
         """
         if self.head:
             if pos > len(self) or pos <= 0 :
@@ -68,6 +78,7 @@ class SinglyLinkedList:
                 idx += 1
 
             return f"element: {current.data} in pos: {pos}"
+
     def get_nth_from_back_recursive(self, cur, pos):
         def recursive_helper(node, pos):
             if node is None:
@@ -106,4 +117,4 @@ LL1 = SinglyLinkedList([1,2,3,4,5])
 LL2 = SinglyLinkedList([1,2,3])
 
 # print(identicalLinkedLists(L1=LL1,L2=LL2))
-print(LL1.get_nth(0))
+print(LL1.get_item(8))
