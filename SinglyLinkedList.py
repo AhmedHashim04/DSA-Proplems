@@ -12,7 +12,19 @@ class SinglyLinkedList:
             for value in list[1:]:
                 current.next = node(value)
                 current = current.next
-
+#   1 2 3 4 5
+    def get_nth(self, pos): #O(n) 
+        if 0 < pos <= len(self):
+            i,n = 1,self.head
+            while i != pos and n.next:
+                i,n = 1+i,n.next
+                
+            return n.data
+        elif not len(self):
+            return f"you havn,t any element in ur SLL"
+        elif pos == 0:
+            return "nothing is orderd"
+        return f"your SLL lenth isn,t to tall to be {pos}"
     def __iter__(self):
         current = self.head
         while current is not None:
@@ -69,13 +81,15 @@ class SinglyLinkedList:
 
         _, result = recursive_helper(cur, pos)
         return result
+
 def identicalLinkedLists(L1, L2):
     """
     Checks if 2 lists have identical data:
         ○ Each list must be the same length
         ○ The value of a node in one list must
-          match the value of its corresponding node in the other list
+            match the value of its corresponding node in the other list
     """
+
     cur1 = L1.head
     cur2 = L2.head
     while cur1 is not None and cur2 is not None:
@@ -90,6 +104,8 @@ def identicalLinkedLists(L1, L2):
             
 
 LL1 = SinglyLinkedList([1,2,3,4,5])
-LL2 = SinglyLinkedList([1,2,3,5])
+LL2 = SinglyLinkedList([1,2,3])
 
-print(identicalLinkedLists(L1=LL1,L2=LL2))
+# print(identicalLinkedLists(L1=LL1,L2=LL2))
+print(len(LL1))
+print(LL1.get_nth(1))
