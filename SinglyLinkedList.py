@@ -12,19 +12,17 @@ class SinglyLinkedList:
             for value in list[1:]:
                 current.next = node(value)
                 current = current.next
-                
-    def get_nth(self, pos): #O(1) 
-        if 0 < pos <= len(self):
-            i,n = 1,self.head
-            while i != pos and n.next:
-                i,n = 1+i,n.next
-                
-            return n.data
-        elif not len(self):
-            return f"you havn,t any element in ur SLL"
-        elif pos == 0:
+
+    def get_nth(self, pos): #O(n)
+
+        if pos <= 0:
             return "nothing is orderd"
-        return f"your SLL lenth isn,t to tall to be {pos}"
+        
+        i,n = 1,self.head
+        while n:
+            if i == pos : return n.data
+            n,i = n.next,i+1
+        return "the lenth isn,t big as ur pos as"
 
     def __iter__(self):
         current = self.head
