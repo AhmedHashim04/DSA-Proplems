@@ -12,8 +12,8 @@ class SinglyLinkedList:
             for value in list[1:]:
                 current.next = node(value)
                 current = current.next
-#   1 2 3 4 5
-    def get_nth(self, pos): #O(n) 
+                
+    def get_nth(self, pos): #O(1) 
         if 0 < pos <= len(self):
             i,n = 1,self.head
             while i != pos and n.next:
@@ -25,6 +25,7 @@ class SinglyLinkedList:
         elif pos == 0:
             return "nothing is orderd"
         return f"your SLL lenth isn,t to tall to be {pos}"
+
     def __iter__(self):
         current = self.head
         while current is not None:
@@ -107,5 +108,4 @@ LL1 = SinglyLinkedList([1,2,3,4,5])
 LL2 = SinglyLinkedList([1,2,3])
 
 # print(identicalLinkedLists(L1=LL1,L2=LL2))
-print(len(LL1))
-print(LL1.get_nth(1))
+print(LL1.get_nth(0))
