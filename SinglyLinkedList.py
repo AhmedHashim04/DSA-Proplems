@@ -113,7 +113,7 @@ class SinglyLinkedList:
             current.data, current.next.data = current.next.data, current.data
             current = current.next.next
         return (self)
-# 1 -> 3 4 5
+
     def reverse(self):
         prev = None
         while self.head:
@@ -167,6 +167,63 @@ class SinglyLinkedList:
 
             assert len(self) == actual_lst_len
             assert len(self) == len(self.debug_data)
+    
+    def swap_head_and_tail(self):
+        """
+            - empty
+            - one element
+            - two element
+            - n of elements
+
+        """
+        if len(self) in (0,1):return
+        elif len(self) == 2: 
+            p = self.head
+            x = self.head.next
+            x.next = p
+            p.next = None
+            self.head = x
+        else:
+            new_head = self.head
+            while new_head.next:
+                new_head = new_head.next
+                        
+
+            last_link = self.head
+            while last_link.next.next:
+                last_link = last_link.next
+
+            last_link.next = self.head
+            new_head.next = self.head.next
+            old_head = self.head
+            old_head.next=None
+            self.head = new_head
+
+    def right_rotate(self,k):
+        if len(self) in (0,1):return
+        while k != 0:
+            p = self.head
+            while p.next:
+                if not p.next.next:
+                    c = p
+                p = p.next
+            p.next =self.head
+            c.next = None
+            self.head = p
+            k -= 1
+    
+    def left_rotate(self,k):
+        if len(self) in (0,1):return
+        while k != 0:
+            x = self.head
+            n = self.head
+            y = self.head.next
+            while x.next:
+                x = x.next
+            x.next = n
+            n.next = None
+            self.head = y
+            k -= 1
 
 
 def identicalLinkedLists(L1, L2):
@@ -188,10 +245,11 @@ def identicalLinkedLists(L1, L2):
     return cur1 is None and cur2 is None
 
 
-LL1 = SinglyLinkedList([1,2,3,4,5])
+LL1 = SinglyLinkedList([1,2])
 LL2 = SinglyLinkedList([1,2,3])
 
 # print(identicalLinkedLists(L1=LL1,L2=LL2))
 # print(LL1.improved_search(5))
-LL1.insert_sorted(4)
+# LL1.right_rotate(3)
+LL1.left_rotate(1)
 print(LL1)
