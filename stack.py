@@ -55,7 +55,27 @@ class stack:
                 stk.append(i)
         return str(''.join(stk))
 
+    def asteroidCollision(self, asteroids):
+        stk = []
+        while asteroids:
+            if not stk or (stk[-1] < 0 and asteroids[0] > 0):
+                stk.append(asteroids.pop(0))
+            elif stk[-1] > 0 > asteroids[0]:
+                if abs(stk[-1]) < abs(asteroids[0]):
+                    stk.pop()
+                elif abs(stk[-1]) == abs(asteroids[0]):
+                    stk.pop()
+                    asteroids.pop(0)
+                else:
+                    asteroids.pop(0)
+            else:
+                stk.append(asteroids.pop(0))
+        return stk
+
+
+                
+
 
 s = stack()
 
-print(s.removeDuplicates("abbaca"))
+print(s.asteroidCollision([5,10,-5]))
