@@ -11,7 +11,7 @@ class stack:
     def peek(self):
         return self.items[len(self.items)-1]
 
-    
+    @property
     def isEmpty(self):
         return self.items == []
 
@@ -56,26 +56,58 @@ class stack:
         return str(''.join(stk))
 
     def asteroidCollision(self, asteroids):
-        stk = []
         while asteroids:
-            if not stk or (stk[-1] < 0 and asteroids[0] > 0):
-                stk.append(asteroids.pop(0))
-            elif stk[-1] > 0 > asteroids[0]:
-                if abs(stk[-1]) < abs(asteroids[0]):
-                    stk.pop()
-                elif abs(stk[-1]) == abs(asteroids[0]):
-                    stk.pop()
+            if self.isEmpty or (self.items[-1] < 0 and asteroids[0] > 0):
+                self.push(asteroids.pop(0))
+            elif self.items[-1] > 0 > asteroids[0]:
+
+                if abs(self.items[-1]) > abs(asteroids[0]):
+                    asteroids.pop(0)
+                elif abs(self.items[-1]) < abs(asteroids[0]):
+                    self.items.pop()
+                elif abs(self.items[-1]) == abs(asteroids[0]):
+                    self.items.pop()
                     asteroids.pop(0)
                 else:
                     asteroids.pop(0)
+    
+            else:self.push(asteroids.pop(0))
+
+
+        return self.items
+    
+    def manual_stack(self, num):
+        while num > 0:
+            self.push(num)
+            num -= 1
+
+        while not self.isEmpty:
+            print(self.pop(), end=" ")
+
+    def scoreOfParentheses(self,s: str) -> int:
+        stack = [0]  
+        for ch in s:
+            print(stack)
+            if ch == "(":stack.append(0)  
+
             else:
-                stk.append(asteroids.pop(0))
-        return stk
+                v = stack.pop()
+                stack[-1] += max(2 * v, 1)
+        return stack.pop()
 
+    def dailyTempretures(self,temperatures = [73, 74, 75, 71, 69, 72, 76, 73]): #REVIEW it 
 
-                
+        n = len(temperatures)
+        answer = [0] *n
+        stk = []
 
+        for curr_day, curr_temp in enumerate(temperatures):
+            while stk and temperatures[stk[-1]] < curr_temp:
+                prev_day = stk.pop()
+                answer[prev_day] = curr_day - prev_day
+            stk.append(curr_day)
 
+        return answer
 s = stack()
-
-print(s.asteroidCollision([5,10,-5]))
+print(enumerate([1,2,58,88]))
+# print(s.dailyTempretures())
