@@ -111,3 +111,4 @@ class stack:
 s = stack()
 print(enumerate([1,2,58,88]))
 # print(s.dailyTempretures())
+
