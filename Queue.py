@@ -6,6 +6,22 @@ class Queue:
         self.capacity = queue_capacity
         self.size = len(queue_initial_values)
 
+
+    def _next(self, pos):
+        pos += 1
+        if pos == self.capacity:
+            pos = 0
+        return pos
+        # return (pos + 1) % size	#  Or shorter way
+
+    def _prev(self, pos):
+        pos -= 1
+        if pos == -1:
+            pos = self.capacity - 1
+        return pos
+        # return (pos  - 1 + size) % size	#  Or shorter way
+
+
     def enqueue(self, item):
         if self.is_full():
             return False
@@ -40,6 +56,24 @@ class Queue:
     def front(self):
         return self.front
 
+    def display(self):
+        print(f"Front {self.front} - rear {self.rear}", end = '\t')
+
+        if self.is_full():
+            print("FULL", end='')
+        elif self.is_empty():
+            print("EMPTY\n")
+            return
+
+        print("")
+        cur = self.front
+
+        for step in range(self.size):
+            print(self.Q[cur], end=" ")
+            cur = self._next(cur)
+        print("")
+
+
 class CircularQueue(Queue):
 
     def enqueue(self, item):
@@ -48,3 +82,32 @@ class CircularQueue(Queue):
             self.rear = (self.rear + 1) % self.capacity
             self.size += 1
             return True
+
+    def dequeue(self):
+        if self.is_empty():
+            return None
+        item = self.Q[self.front]
+        self.front = (self.front + 1) % self.capacity
+        self.size -= 1
+        return item
+    
+    def reverse_dequeue(self):
+        if self.is_empty():
+            return None
+        self.rear = self.rear-1
+        item = self.Q[self.rear]
+        self.Q[self.rear] = None
+        self.size -= 1
+        return item
+
+    def reverse_enqueue(self,item):
+        self.Q[self.front] = item
+        
+
+
+arr = CircularQueue([1,2,3,5])
+arr.display()
+
+
+arr.reverse_enqueue(10)
+arr.display()
