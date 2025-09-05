@@ -104,10 +104,26 @@ class CircularQueue(Queue):
         self.Q[self.front] = item
         
 
+class Stack:
+    def __init__(self):
+        self.queue = Queue()
 
-arr = CircularQueue([1,2,3,5])
-arr.display()
+    def push(self, item):
+        self.queue.enqueue(item)
 
+    def pop(self):
+        if self.queue.is_empty():
+            return None
+        # Move all elements except the last one to the front
+        while self.queue.size > 1:
+            self.queue.enqueue(self.queue.dequeue())
+        return self.queue.dequeue()
 
-arr.reverse_enqueue(10)
-arr.display()
+    def is_empty(self):
+        return self.queue.is_empty()
+
+    def size(self):
+        return self.queue.size()
+
+    def display(self):
+        self.queue.display()
