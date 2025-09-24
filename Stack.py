@@ -18,6 +18,8 @@ class stack:
     def size(self):
         return len(self.items)
     
+
+
     def reverse_num(self,num):
         while num > 0:
             self.push(num%10)
@@ -30,6 +32,8 @@ class stack:
             place *= 10
 
         return reversed_num        
+
+
     def isValid(self, s: str) -> bool:
         stk = []
         brackets = ['(',  '[' , '{', '}',')', ']']
@@ -112,3 +116,18 @@ s = stack()
 print(enumerate([1,2,58,88]))
 # print(s.dailyTempretures())
 
+class QueueUsing2Stacks:
+    def __init__(self):
+        self.stack1 = []
+        self.stack2 = []
+
+    def enqueue(self, item):
+        self.stack1.append(item)
+
+    def dequeue(self):
+        if not self.stack2:
+            while self.stack1:
+                self.stack2.append(self.stack1.pop())
+        if not self.stack2:
+            raise Exception("Queue is empty")
+        return self.stack2.pop()
