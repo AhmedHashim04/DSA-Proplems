@@ -12,7 +12,20 @@ class Node:
 class BinaryTree:
     def __init__(self, value):
         self.root = Node(value)
-        self.max_var = 0
+
+
+    def print_tree(self, node, level=0, prefix="Root: "):
+        if node is not None:
+            print(" " * (level * 4) + prefix + str(node.val))
+            if node.left or node.right:
+                if node.left:
+                    self.print_tree(node.left, level + 1, "L--- ")
+                else:
+                    print(" " * ((level + 1) * 4) + "L--- None")
+                if node.right:
+                    self.print_tree(node.right, level + 1, "R--- ")
+                else:
+                    print(" " * ((level + 1) * 4) + "R--- None")
 
     def _print_inorder(self, current: Node):
         if not current: return
@@ -66,14 +79,38 @@ class BinaryTree:
         print(f"Returning max({current.val}, {left_max}, {right_max}) = {result}")
     
         return result
+    ######################
+    def _maxDepth(self, current):
+        if not current: return 0
+        return 1 + max(self._maxDepth(current.left), self._maxDepth(current.right))
+
+
+    
+    def maxDepth(self):
+        return self._maxDepth(self.root)
+    ##################
+    def _sum_of_left_leaves(self, current, dire):
+        if not current:
+            return 0
+        if not current.left and not current.right:
+            if dire == "l":
+                return current.val
+            if dire == "r":
+                return 0
+        left_sum = self._sum_of_left_leaves(current.left,"l")
+        right_sum = self._sum_of_left_leaves(current.right,"r")
+        return left_sum + right_sum
+
+    def sum_of_left_leaves(self):
+        return self._sum_of_left_leaves(self.root,"l")
 
 
 # Example usage: add some leaf nodes to the tree
 if __name__ == "__main__":
     tree = BinaryTree(1)
-    tree.add([ 5, 3, 4, 5, 6, 7], [ 'L','R', 'L','R', 'L','R'])
-    # Print inorder traversal
-    print(tree.tree_max())
+    tree.add([ 5, 3, 4, 8, 6, 7], [ 'L','R', 'L','R', 'L','R'])
+    print(tree.print_tree(tree.root))
+    print(tree.sum_of_left_leaves())
 
 
 
