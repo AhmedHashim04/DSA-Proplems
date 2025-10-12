@@ -48,6 +48,24 @@ class BinaryTree:
     def get_max(self):
         self._get_max(self.root)
         return self.max_var
+    ###############################
+
+    
+    def tree_max(self):
+        print("tree_max called")
+        return self._tree_max(self.root)
+        
+    def _tree_max(self, current):
+        print(f"_tree_max called with node: {current.val if current else None}")
+        if not current:
+            return float("-inf")
+
+        left_max = self._tree_max(current.left)
+        right_max = self._tree_max(current.right)
+        result = max(current.val, left_max, right_max)
+        print(f"Returning max({current.val}, {left_max}, {right_max}) = {result}")
+    
+        return result
 
 
 # Example usage: add some leaf nodes to the tree
@@ -55,7 +73,7 @@ if __name__ == "__main__":
     tree = BinaryTree(1)
     tree.add([ 5, 3, 4, 5, 6, 7], [ 'L','R', 'L','R', 'L','R'])
     # Print inorder traversal
-    print(tree.get_max())
+    print(tree.tree_max())
 
 
 
