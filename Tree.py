@@ -1,4 +1,4 @@
-
+from collections import deque
 
 class Node:
     def __init__(self, val=None,
@@ -12,50 +12,50 @@ class Node:
 class BinaryTree:
     def __init__(self, value):
         self.root = Node(value)
+        self.max_var = 0
 
-    def _print_inorder(self, current):
-        if not current:
-            return
+    def _print_inorder(self, current: Node):
+        if not current: return
         self._print_inorder(current.left)
-        print(current.val, end=' ')
+        print(current.val)
         self._print_inorder(current.right)
-
+    
     def print_inorder(self):
         self._print_inorder(self.root)
 
-    def add(self, values_lst, direction_lst):
-        assert len(values_lst) == len(direction_lst)
 
+    def add(self, values_list, direction_list):  
+        assert len(values_list) == len(direction_list)
         current = self.root
-        # iterate on the path, all necessary nodes
-        for i, val in enumerate(values_lst):
-            if direction_lst[i] == 'L':
+        for value, direction in zip(values_list, direction_list):
+            if direction == 'L':
                 if not current.left:
-                    current.left = Node(values_lst[i])
-                else:
-                    assert current.left.val == values_lst[i]
+                    current.left = Node(value)
                 current = current.left
-            else:
+            elif direction == 'R':
                 if not current.right:
-                    current.right = Node(values_lst[i])
-                else:
-                    assert current.right.val == values_lst[i]
+                    current.right = Node(value)
                 current = current.right
+            else:
+                raise ValueError("Direction must be 'L' or 'R'")
 
-    def tree_max(self, current):
-        if not current:
-            return
-        
-        self.tree_max(current.left)
-        self.tree_max(current.right)
+    def _get_max(self, current:Node):
+        if not current: return
+        if current.val  > self.max_var: self.max_var = current.val
+        self._get_max(current.left)
+        self._get_max(current.right)
+
+    def get_max(self):
+        self._get_max(self.root)
+        return self.max_var
 
 
-
-if __name__ == '__main__':
+# Example usage: add some leaf nodes to the tree
+if __name__ == "__main__":
     tree = BinaryTree(1)
-    tree.add([2, 4, 7], ['L', 'L', 'L'])
-    tree.add([2, 4, 8], ['L', 'L', 'R'])
-    tree.add([2, 5, 9], ['L', 'R', 'R'])
-    tree.add([3, 6, 10], ['R', 'R', 'L'])
+    tree.add([ 5, 3, 4, 5, 6, 7], [ 'L','R', 'L','R', 'L','R'])
+    # Print inorder traversal
+    print(tree.get_max())
 
-    tree.print_inorder()
+
+
