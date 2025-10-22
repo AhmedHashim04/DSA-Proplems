@@ -52,15 +52,6 @@ class BinaryTree:
             else:
                 raise ValueError("Direction must be 'L' or 'R'")
 
-    def _get_max(self, current:Node):
-        if not current: return
-        if current.val  > self.max_var: self.max_var = current.val
-        self._get_max(current.left)
-        self._get_max(current.right)
-
-    def get_max(self):
-        self._get_max(self.root)
-        return self.max_var
     ###############################
 
     
@@ -73,10 +64,8 @@ class BinaryTree:
         if not current:
             return float("-inf")
 
-        left_max = self._tree_max(current.left)
-        right_max = self._tree_max(current.right)
-        result = max(current.val, left_max, right_max)
-        print(f"Returning max({current.val}, {left_max}, {right_max}) = {result}")
+        result = max(current.val, self._tree_max(current.left), self._tree_max(current.right))
+        print(f"Returning max({current.val}, {self._tree_max(current.left)}, {self._tree_max(current.right)}) = {result}")
     
         return result
     ######################
@@ -125,6 +114,5 @@ if __name__ == "__main__":
     tree.add([ 5, 3, 4, 8, 6, 7], [ 'L','R', 'L','R', 'L','R'])
     # print(tree.print_tree(tree.root))
     # print(tree.sum_of_left_leaves())
-    tree.Cusins()
-
+    print(tree.tree_max())
 
