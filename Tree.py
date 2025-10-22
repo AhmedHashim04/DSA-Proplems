@@ -89,28 +89,42 @@ class BinaryTree:
     def maxDepth(self):
         return self._maxDepth(self.root)
     ##################
-    def _sum_of_left_leaves(self, current, dire):
-        if not current:
-            return 0
-        if not current.left and not current.right:
-            if dire == "l":
+    def _sum_of_left_leaves(self, current, is_left = False):
+        if not current : return 0
+        if not(current.left and current.right):    
+            if is_left :
                 return current.val
-            if dire == "r":
+            else :
                 return 0
-        left_sum = self._sum_of_left_leaves(current.left,"l")
-        right_sum = self._sum_of_left_leaves(current.right,"r")
+
+        left_sum = self._sum_of_left_leaves(current.left,True)
+        right_sum = self._sum_of_left_leaves(current.right)
+
         return left_sum + right_sum
 
     def sum_of_left_leaves(self):
-        return self._sum_of_left_leaves(self.root,"l")
+        return self._sum_of_left_leaves(self.root)
+
+    ##################
+    # Cusins must have same level and must not have same parent
+    def _Cusins(self, current, lev1 = -8, lev2= -8, parent1= -8, parent2= -8):
+        if not current : return 0
+        first_child  = self._Cusins(current.left, lev1+1,parent1=current) 
+        secon_child  = self._Cusins(current.right, lev2+1,parent2=current)
+
+        print(parent1 == parent2, lev1 == lev2)
+    def Cusins(self):
+        return self._Cusins(self.root)
+
+
 
 
 # Example usage: add some leaf nodes to the tree
 if __name__ == "__main__":
     tree = BinaryTree(1)
     tree.add([ 5, 3, 4, 8, 6, 7], [ 'L','R', 'L','R', 'L','R'])
-    print(tree.print_tree(tree.root))
-    print(tree.sum_of_left_leaves())
-
+    # print(tree.print_tree(tree.root))
+    # print(tree.sum_of_left_leaves())
+    tree.Cusins()
 
 
