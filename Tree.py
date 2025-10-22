@@ -96,16 +96,24 @@ class BinaryTree:
 
     ##################
     # Cusins must have same level and must not have same parent
-    def _Cusins(self, current, lev1 = -8, lev2= -8, parent1= -8, parent2= -8):
-        if not current : return 0
-        first_child  = self._Cusins(current.left, lev1+1,parent1=current) 
-        secon_child  = self._Cusins(current.right, lev2+1,parent2=current)
+    def get_level_and_parent(self, current, x_y, parent=None, level=0):
+        if not current:
+            return None, None  
 
-        print(parent1 == parent2, lev1 == lev2)
-    def Cusins(self):
-        return self._Cusins(self.root)
+        if current.val == x_y:
+            return level, parent
 
+        left_level, left_parent = self.get_level_and_parent(current.left, x_y, current, level + 1)
+        if left_level is not None:
+            return left_level, left_parent
 
+        right_level, right_parent = self.get_level_and_parent(current.right, x_y, current, level + 1)
+        return right_level, right_parent
+
+    def isCousins(self, root, x: int, y: int) -> bool:
+        xd, xp = self.get_level_and_parent(root, x)
+        yd, yp = self.get_level_and_parent(root, y)
+        return xd == yd and xp != yp
 
 
 # Example usage: add some leaf nodes to the tree
@@ -114,5 +122,4 @@ if __name__ == "__main__":
     tree.add([ 5, 3, 4, 8, 6, 7], [ 'L','R', 'L','R', 'L','R'])
     # print(tree.print_tree(tree.root))
     # print(tree.sum_of_left_leaves())
-    print(tree.tree_max())
-
+    tree.isCousins()
